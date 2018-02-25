@@ -3,4 +3,9 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="submit">submit</string>
+    <string name="PLACEHOLDERTEXT">placeholder</string>
+    <string name="Spaniel">Spaniel</string>
+    <string name="Retriever">Retriever</string>
+    <string name="Poodle">Poodle</string>
+    <string name="Terrier">Terrier</string>
 </resources>
