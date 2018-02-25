@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import nyc.c4q.android_final_dogsapp.Networking.Dog_Caller;
 import nyc.c4q.android_final_dogsapp.controller.DogsAdapter;
@@ -31,6 +32,7 @@ public class DogsActivity extends AppCompatActivity {
     private String breedName;
     private RecyclerView recyclerView;
     private DogsAdapter breedAdapter;
+    TextView dogBreed;
 
     SharedPreferences loginInfo;
     private static final String SHARED_PREFS_KEY = "mySharedPrefs";
@@ -39,36 +41,33 @@ public class DogsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs);
-        recyclerView = findViewById(R.id.recyclerview);
+        dogBreed = findViewById(R.id.breed_name);
 
         loginInfo = getApplicationContext().getSharedPreferences(SHARED_PREFS_KEY,MODE_PRIVATE);
 
         Intent intent = getIntent();
         if (intent != null) {
             breedName = intent.getStringExtra("breed");
+            dogBreed.setText(breedName);
             Log.d(TAG, "onCreate: " + intent.getStringExtra("breed"));
-        } else if (savedInstanceState != null){
-            breedName = savedInstanceState.getString("breed");
         } else {
             breedName = "";
         }
-
-        breedAdapter = new DogsAdapter();
-        GridLayoutManager layoutManager;
+        recyclerView = findViewById(R.id.recyclerview);
         if (getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE) {
-            layoutManager = new GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false));
         } else {
-            layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
+           recyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
         }
+        breedAdapter = new DogsAdapter();
         recyclerView.setAdapter(breedAdapter);
-        recyclerView.setLayoutManager(layoutManager);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://dog.ceo/api/breed/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        if (!breedName.equals("")){
+        if (!breedName.isEmpty()){
             Dog_Caller breedService = retrofit.create(Dog_Caller.class);
             Call<Dogs.breedList> breedImgListCall = breedService.getList(breedName);
             breedImgListCall.enqueue(new Callback<Dogs.breedList>() {
