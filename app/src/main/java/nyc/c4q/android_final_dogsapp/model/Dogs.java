@@ -14,37 +14,25 @@ public class Dogs {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public class breedList {
+
         private String status;
+
         private ArrayList<String> message;
 
         public String getStatus() {
             return status;
         }
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
         public ArrayList<String> getMessage() {
             return message;
         }
 
-        public void setMessage(ArrayList<String> message) {
-            this.message = message;
-        }
     }
 
 

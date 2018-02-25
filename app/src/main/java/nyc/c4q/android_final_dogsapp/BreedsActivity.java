@@ -4,7 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +23,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BreedsActivity extends AppCompatActivity {
+    CardView terrierCard;
+    CardView spanielCard;
+    CardView poodleCard;
+    CardView retrieverCard;
+
 
     TextView welcomeTV;
     ImageView terrierImage;
@@ -62,6 +72,11 @@ public class BreedsActivity extends AppCompatActivity {
         spanielName.setText(R.string.Spaniel);
         poodleName.setText(R.string.Poodle);
 
+        retrieverCard = findViewById(R.id.retriever_card);
+        poodleCard = findViewById(R.id.poodle_card);
+        spanielCard = findViewById(R.id.spaniel_card);
+        terrierCard = findViewById(R.id.terrier_card);
+
 
         Intent intent = getIntent();
         loginInfo = getApplicationContext().getSharedPreferences(SHARED_PREFS_KEY,MODE_PRIVATE);
@@ -77,11 +92,44 @@ public class BreedsActivity extends AppCompatActivity {
         Dog_Call("retriever");
         Dog_Call("poodle");
         Dog_Call("spaniel");
+
+        terrierCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTerrier = new Intent(BreedsActivity.this, DogsActivity.class);
+                intentTerrier.putExtra("breed", "terrier");
+                startActivity(intentTerrier);
+            }
+        });
+
+        retrieverCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentRetriever = new Intent(BreedsActivity.this, DogsActivity.class);
+                intentRetriever.putExtra("breed", "retriever");
+                startActivity(intentRetriever);
+            }
+        });
+
+        poodleCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentPoodle = new Intent(BreedsActivity.this, DogsActivity.class);
+                intentPoodle.putExtra("breed", "poodle");
+                startActivity(intentPoodle);
+            }
+        });
+
+        spanielCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSpaniel = new Intent(BreedsActivity.this, DogsActivity.class);
+                intentSpaniel.putExtra("breed", "spaniel");
+                startActivity(intentSpaniel);
+            }
+        });
+
     }
-
-
-
-
 
 
     public void Dog_Call(String dogBreed){
@@ -93,16 +141,24 @@ public class BreedsActivity extends AppCompatActivity {
             public void onResponse(Call<Dogs> call, Response<Dogs> response) {
                 dBreed = response.body();
                 if (dBreed.getMessage().contains("terrier")) {
-                    Picasso.with(BreedsActivity.this).load(dBreed.getMessage()).into(terrierImage);
+                    Picasso.with(BreedsActivity.this)
+                            .load(dBreed.getMessage())
+                            .into(terrierImage);
                 }
                 if (dBreed.getMessage().contains("spaniel")) {
-                    Picasso.with(BreedsActivity.this).load(dBreed.getMessage()).into(spanielImage);
+                    Picasso.with(BreedsActivity.this)
+                            .load(dBreed.getMessage())
+                            .into(spanielImage);
                 }
                 if (dBreed.getMessage().contains("retriever")) {
-                    Picasso.with(BreedsActivity.this).load(dBreed.getMessage()).into(retrieverImage);
+                    Picasso.with(BreedsActivity.this)
+                            .load(dBreed.getMessage())
+                            .into(retrieverImage);
                 }
                 if (dBreed.getMessage().contains("poodle")) {
-                    Picasso.with(BreedsActivity.this).load(dBreed.getMessage()).into(poodleImage);
+                    Picasso.with(BreedsActivity.this)
+                            .load(dBreed.getMessage())
+                            .into(poodleImage);
                 }
                 Log.d(TAG, "onResponse " + BreedsActivity.this.dBreed);
             }
@@ -112,5 +168,25 @@ public class BreedsActivity extends AppCompatActivity {
                 Log.d(TAG, "ONFAILURE ");
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logging:
+                loginInfo.edit().remove("username").commit();
+                Intent intent = new Intent(BreedsActivity.this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
