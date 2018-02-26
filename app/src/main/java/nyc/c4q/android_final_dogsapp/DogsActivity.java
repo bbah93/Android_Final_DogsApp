@@ -60,7 +60,7 @@ public class DogsActivity extends AppCompatActivity {
            recyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
         }
         breedAdapter = new DogsAdapter();
-        recyclerView.setAdapter(breedAdapter);
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://dog.ceo/api/breed/")
@@ -75,6 +75,7 @@ public class DogsActivity extends AppCompatActivity {
                 public void onResponse(Call<Dogs.breedList> call, Response<Dogs.breedList> response) {
                     if (response.isSuccessful()) {
                         breedAdapter.setDogIMG_URL(response.body().getMessage());
+                        recyclerView.setAdapter(breedAdapter);
                     }
                 }
                 @Override

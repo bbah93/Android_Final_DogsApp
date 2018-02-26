@@ -16,6 +16,6 @@ public interface Dog_Caller {
     @GET("{breed}/images/random")
     Call<Dogs> getDogImage(@Path("breed") String breed);
 
-    @GET("https://dog.ceo/api/breed/{breed}/images")
+    @GET("{breed}/images")
     Call<Dogs.breedList> getList(@Path("breed") String breed);
 }

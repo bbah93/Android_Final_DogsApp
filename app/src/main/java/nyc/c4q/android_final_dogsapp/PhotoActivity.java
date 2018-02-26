@@ -37,7 +37,7 @@ public class PhotoActivity extends AppCompatActivity {
             else {
                 breedName = "";
             }
-            if(!breedName.equals("")){
+            if(!breedName.isEmpty()){
                 Picasso.with(PhotoActivity.this).load(breedName)
                         .fit()
                         .centerInside()

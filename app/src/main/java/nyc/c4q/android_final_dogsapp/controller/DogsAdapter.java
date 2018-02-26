@@ -42,7 +42,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.itemView.getContext(),PhotoActivity.class);
-                intent.putExtra("breedName", dogIMG_URL.get(position));
+                intent.putExtra("breed", dogIMG_URL.get(position));
                 holder.itemView.getContext().startActivity(intent);
             }
         });
