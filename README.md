@@ -4,6 +4,9 @@ For some reason my recyclerview will not inflate for some reason and I don't kno
 
 
 ########UPDATED README##############
+
+
+
 Fixed everything and now app works perfectly.
 Things I had to fix:
 GET Call had wrong endpoint and included BaseURL, causing a onResponse with no data.
